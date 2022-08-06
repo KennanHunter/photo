@@ -1,17 +1,12 @@
-use juniper::{ GraphQLObject};
+use juniper::GraphQLInputObject;
 
-#[derive(GraphQLObject)]
+#[derive(GraphQLInputObject)]
 pub struct Crop {
     width: i32,
     height: i32,
 }
 
-pub enum StepMethods {
-    Crop(Crop),
+#[derive(GraphQLInputObject)]
+pub struct Steps {
+    crop: Option<Crop>,
 }
-
-graphql_union!(Character: () |&self| {
-    instance_resolvers: |_| {
-        &Crop => match *self { StepMethod::Crop(ref h) => Some(h), _ => None },
-    }
-});
