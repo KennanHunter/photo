@@ -1,25 +1,27 @@
 use super::{steps::Steps, Mutation};
 use juniper::{graphql_object, FieldResult, GraphQLInputObject, GraphQLObject};
 
-#[derive(GraphQLInputObject)]
-#[graphql(description = "")]
+#[derive(GraphQLInputObject, Debug)]
 pub struct CreateExchangeInput {
+    #[graphql(description = "API authentication key")]
     auth: Option<String>,
-    step: Option<Vec<Steps>>,
+    #[graphql(description = "The steps the Image will go through")]
+    steps: Option<Vec<Steps>>,
+    #[graphql(description = "End behavior")]
     end_behavior: Option<EndBehaviorInput>,
 }
 
-#[derive(GraphQLInputObject)]
+#[derive(GraphQLInputObject, Debug)]
 pub struct EndBehaviorInput {
     post: EndPostInput,
 }
 
-#[derive(GraphQLInputObject)]
+#[derive(GraphQLInputObject, Debug)]
 pub struct EndPostInput {
     url: String,
 }
 
-#[derive(GraphQLObject)]
+#[derive(GraphQLObject, Debug)]
 pub struct CreateExchangeReturn {
     upload_link: String,
     download_link: String,
@@ -28,7 +30,8 @@ pub struct CreateExchangeReturn {
 #[graphql_object]
 impl Mutation {
     fn create_exchange(input: CreateExchangeInput) -> FieldResult<CreateExchangeReturn> {
-        // println!("{:?}", input);
+        println!("{:#?}", input);
+
         Ok(CreateExchangeReturn {
             upload_link: "Epic".to_owned(),
             download_link: "gamer".to_owned(),
