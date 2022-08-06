@@ -1,4 +1,4 @@
-use super::{steps::Steps, Mutation};
+use super::{steps::Step, Mutation};
 use juniper::{graphql_object, FieldResult, GraphQLInputObject, GraphQLObject};
 
 #[derive(GraphQLInputObject, Debug)]
@@ -6,7 +6,7 @@ pub struct CreateExchangeInput {
     #[graphql(description = "API authentication key")]
     auth: Option<String>,
     #[graphql(description = "The steps the Image will go through")]
-    steps: Option<Vec<Steps>>,
+    steps: Option<Vec<Step>>,
     #[graphql(description = "End behavior")]
     end_behavior: Option<EndBehaviorInput>,
 }
