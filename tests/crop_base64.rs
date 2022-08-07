@@ -50,5 +50,6 @@ fn crop_base64() {
         img.get_height(),
         img.get_width()
     );
+    std::fs::create_dir_all("/some/dir").unwrap();
     save_image(img, "tests/tmp/new_image.jpg");
 }
