@@ -1,5 +1,6 @@
 use photon_rs::PhotonImage;
 
+/// Returns a cropped image
 pub fn crop_image(
     image: &mut PhotonImage,
     height: i32,

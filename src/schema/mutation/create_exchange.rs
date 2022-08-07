@@ -18,6 +18,7 @@ pub struct CreateExchangeInput {
 
 #[derive(GraphQLInputObject, Debug)]
 pub struct EndBehaviorInput {
+    /// Url to post to when done
     callback: EndPostInput,
 }
 
