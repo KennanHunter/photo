@@ -1,33 +1,11 @@
-mod context;
-mod schema;
-mod steps;
-mod util;
+use photo::{graphql, graphql_playground, index};
 
 use std::{io, sync::Arc};
 
 use actix_cors::Cors;
-use actix_web::{
-    get, middleware, route,
-    web::{self, Data},
-    App, HttpResponse, HttpServer, Responder,
-};
-use actix_web_lab::respond::Html;
-use juniper::http::{graphiql::graphiql_source, GraphQLRequest};
+use actix_web::{middleware, web::Data, App, HttpServer};
 
-use crate::schema::{create_schema, Schema};
-
-/// GraphiQL playground UI
-#[get("/graphiql")]
-async fn graphql_playground() -> impl Responder {
-    Html(graphiql_source("/graphql", None))
-}
-
-/// GraphQL endpoint
-#[route("/graphql", method = "GET", method = "POST")]
-async fn graphql(st: web::Data<Schema>, data: web::Json<GraphQLRequest>) -> impl Responder {
-    let user = data.execute(&st, &()).await;
-    HttpResponse::Ok().json(user)
-}
+use photo::schema::create_schema;
 
 #[actix_web::main]
 async fn main() -> io::Result<()> {
@@ -43,6 +21,7 @@ async fn main() -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(Data::from(schema.clone()))
+            .service(index)
             .service(graphql)
             .service(graphql_playground)
             // the graphiql UI requires CORS to be enabled

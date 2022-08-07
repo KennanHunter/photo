@@ -3,8 +3,10 @@ use juniper::GraphQLInputObject;
 #[derive(GraphQLInputObject, Debug)]
 /// Crops the image
 pub struct Crop {
-    width: i32,
-    height: i32,
+    pub width: i32,
+    pub height: i32,
+    pub xoffset: i32,
+    pub yoffset: i32,
 }
 
 /// Select only one option in step
@@ -12,5 +14,5 @@ pub struct Crop {
 /// Returns Error if more than 1 is selected
 #[derive(GraphQLInputObject, Debug)]
 pub struct Step {
-    crop: Option<Crop>,
+    pub crop: Option<Crop>,
 }
