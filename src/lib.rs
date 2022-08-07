@@ -1,7 +1,7 @@
 pub mod context;
 pub mod schema;
 mod steps;
-mod util;
+pub mod util;
 
 use actix_web::{get, route, web, HttpResponse, Responder};
 use actix_web_lab::{respond::Html, web::Redirect};

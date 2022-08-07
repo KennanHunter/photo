@@ -1,4 +1,4 @@
-use crate::steps::step_to_func;
+use crate::{steps::step_to_func, util::extract_image_base64};
 use photon_rs::base64_to_image;
 
 use super::{steps::Step, Mutation};
@@ -44,12 +44,12 @@ impl Mutation {
         //     return simple_error("Fuck");
         // }
 
-        let mut image;
+        // println!("{:#?}", input.image_base64.as_ref().unwrap());
 
-        image = base64_to_image(&input.image_base64.unwrap());
+        let mut image = base64_to_image(&extract_image_base64(&input.image_base64.unwrap()));
         if input.steps.is_some() {
             for step in input.steps.unwrap() {
-                step_to_func(step, &mut image);
+                image = step_to_func(step, &mut image).unwrap();
             }
         }
 

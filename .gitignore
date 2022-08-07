@@ -1,4 +1,5 @@
 /target
 /tmp
+/tests/tmp
 
 Cargo.lock
