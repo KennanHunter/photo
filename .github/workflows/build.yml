@@ -2,6 +2,9 @@ on: [push]
 
 name: Build and Test Binary
 
+permissions:
+  contents: write
+
 jobs:
   check:
     name: Build and Test
