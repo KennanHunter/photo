@@ -1,10 +1,15 @@
+use crate::steps::step_to_func;
+use photon_rs::base64_to_image;
+
 use super::{steps::Step, Mutation};
 use juniper::{graphql_object, FieldResult, GraphQLInputObject, GraphQLObject};
 
 #[derive(GraphQLInputObject, Debug)]
 pub struct CreateExchangeInput {
-    #[graphql(description = "API authentication key")]
+    /// API authentication key
     auth: Option<String>,
+    /// Image represented as base64
+    image_base64: Option<String>,
     #[graphql(description = "The steps the Image will go through")]
     steps: Option<Vec<Step>>,
     #[graphql(description = "End behavior")]
@@ -13,7 +18,7 @@ pub struct CreateExchangeInput {
 
 #[derive(GraphQLInputObject, Debug)]
 pub struct EndBehaviorInput {
-    post: EndPostInput,
+    callback: EndPostInput,
 }
 
 #[derive(GraphQLInputObject, Debug)]
@@ -23,18 +28,35 @@ pub struct EndPostInput {
 
 #[derive(GraphQLObject, Debug)]
 pub struct CreateExchangeReturn {
-    upload_link: String,
-    download_link: String,
+    upload_link: Option<String>,
+    download_link: Option<String>,
+    base64image: Option<String>,
 }
 
 #[graphql_object]
 impl Mutation {
     fn create_exchange(input: CreateExchangeInput) -> FieldResult<CreateExchangeReturn> {
-        println!("{:#?}", input);
+        // if input.auth.is_none() {
+        //     return simple_error("Epic");
+        // }
+
+        // if input.image_base64.is_none() {
+        //     return simple_error("Fuck");
+        // }
+
+        let mut image;
+
+        image = base64_to_image(&input.image_base64.unwrap());
+        if input.steps.is_some() {
+            for step in input.steps.unwrap() {
+                step_to_func(step, &mut image);
+            }
+        }
 
         Ok(CreateExchangeReturn {
-            upload_link: "Epic".to_owned(),
-            download_link: "gamer".to_owned(),
+            upload_link: None,
+            download_link: None,
+            base64image: Some(image.get_base64()),
         })
     }
 }

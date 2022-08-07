@@ -1,5 +1,5 @@
-mod mutation;
-mod query;
+pub mod mutation;
+pub mod query;
 
 use juniper::{EmptySubscription, RootNode};
 

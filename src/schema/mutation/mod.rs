@@ -1,4 +1,4 @@
-mod create_exchange;
-mod steps;
+pub mod create_exchange;
+pub mod steps;
 
 pub struct Mutation {}
