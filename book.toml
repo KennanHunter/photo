@@ -7,3 +7,8 @@ title = "Kennan's Photo Server"
 
 [build]
 build-dir = "./target/book"
+
+[output.html]
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
+cname = "photo.kennan.tech"

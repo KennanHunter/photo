@@ -7,7 +7,7 @@ use photon_rs::{
 
 #[test]
 fn crop_base64() {
-    let encoded_value: String = open_image("tests/static/kurisu.png")
+    let encoded_value: String = open_image("static/kurisu.png")
         .expect("File should open")
         .get_base64();
 
