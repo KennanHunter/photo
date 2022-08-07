@@ -1,0 +1,9 @@
+[book]
+authors = ["Kennan Hunter"]
+language = "en"
+multilingual = false
+src = "book"
+title = "Kennan's Photo Server"
+
+[build]
+build-dir = "./target/book"
