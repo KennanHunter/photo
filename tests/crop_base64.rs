@@ -1,9 +1,6 @@
 use juniper::ScalarValue;
 use photo::util::extract_image_base64;
-use photon_rs::{
-    base64_to_image,
-    native::{open_image, save_image},
-};
+use photon_rs::{base64_to_image, native::open_image};
 
 #[test]
 fn crop_base64() {
@@ -50,6 +47,12 @@ fn crop_base64() {
         img.get_height(),
         img.get_width()
     );
-    std::fs::create_dir_all("/some/dir").unwrap();
-    save_image(img, "tests/tmp/new_image.jpg");
+
+    assert!(img.get_height() == 100);
+
+    #[cfg(debug_assertions)]
+    {
+        std::fs::create_dir_all("tests/tmp").unwrap();
+        photon_rs::native::save_image(img, "tests/tmp/new_image.jpg");
+    }
 }
