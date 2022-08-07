@@ -23,9 +23,7 @@ jobs:
           command: fmt
 
       - name: Run clippy
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy -- -D warnings
+        run: cargo clippy -- -D warnings
 
       - name: Run tests
         uses: actions-rs/cargo@v1
