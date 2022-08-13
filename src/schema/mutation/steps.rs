@@ -9,10 +9,18 @@ pub struct Crop {
     pub yoffset: i32,
 }
 
+/// Resize image
+#[derive(GraphQLInputObject, Debug)]
+pub struct Resize {
+    pub width: i32,
+    pub height: i32,
+}
+
 /// Select only one option in step
 ///
 /// Returns Error if more than 1 is selected
 #[derive(GraphQLInputObject, Debug)]
 pub struct Step {
     pub crop: Option<Crop>,
+    pub resize: Option<Resize>,
 }

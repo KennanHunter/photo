@@ -3,7 +3,7 @@ use photo::util::extract_image_base64;
 use photon_rs::{base64_to_image, native::open_image};
 
 #[test]
-fn crop_base64() {
+fn resize_base64() {
     let encoded_value: String = open_image("static/kurisu.png")
         .expect("File should open")
         .get_base64();
@@ -12,7 +12,7 @@ fn crop_base64() {
         "{}{}{}",
         r#"mutation {createExchange(input: {auth: "epic jwt here", imageBase64: ""#,
         encoded_value,
-        r#"", steps: {crop: {width: 100, height: 100, xoffset: 0, yoffset: 0}}}) {base64image}}"#
+        r#"", steps: {resize: {width: 100, height: 100}}}) {base64image}}"#
     );
 
     let res = futures::executor::block_on(juniper::execute(
@@ -53,6 +53,6 @@ fn crop_base64() {
     #[cfg(debug_assertions)]
     {
         std::fs::create_dir_all("tests/tmp").unwrap();
-        photon_rs::native::save_image(img, "tests/tmp/cropped_image.jpg");
+        photon_rs::native::save_image(img, "tests/tmp/resized_image.jpg");
     }
 }
