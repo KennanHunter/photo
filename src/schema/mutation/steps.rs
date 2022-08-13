@@ -1,6 +1,6 @@
 use juniper::GraphQLInputObject;
 
-use crate::steps::transform::flip::FlipDirection;
+use crate::steps::{conf::blur::Blurs, transform::flip::FlipDirection};
 
 #[derive(GraphQLInputObject, Debug)]
 /// Crops the image
@@ -23,6 +23,12 @@ pub struct Flip {
     pub flip_direction: FlipDirection,
 }
 
+#[derive(GraphQLInputObject, Debug)]
+pub struct Blur {
+    pub blur: Blurs,
+    pub radius: Option<i32>,
+}
+
 /// Select only one option in step
 ///
 /// Returns Error if more than 1 is selected
@@ -31,4 +37,5 @@ pub struct Step {
     pub crop: Option<Crop>,
     pub resize: Option<Resize>,
     pub flip: Option<Flip>,
+    pub blur: Option<Blur>,
 }

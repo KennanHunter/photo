@@ -1,10 +1,14 @@
+pub mod conf;
 pub mod transform;
 
 use crate::schema::mutation::steps::Step;
 use juniper::{graphql_value, FieldError};
 use photon_rs::PhotonImage;
 
-use self::transform::{crop::crop_image, flip::flip_image, resize::resize_image};
+use self::{
+    conf::blur::blur_image,
+    transform::{crop::crop_image, flip::flip_image, resize::resize_image},
+};
 
 /// Applies the specified step to the image
 pub fn step_to_func(step: Step, image: &mut PhotonImage) -> Result<PhotonImage, FieldError> {
@@ -25,6 +29,10 @@ pub fn step_to_func(step: Step, image: &mut PhotonImage) -> Result<PhotonImage, 
     if step.flip.is_some() {
         let flip = step.flip.unwrap();
         return Ok(flip_image(image, flip.flip_direction));
+    }
+    if step.blur.is_some() {
+        let blur = step.blur.unwrap();
+        return Ok(blur_image(image, blur.blur, blur.radius));
     }
 
     // If no step is valid then panic
